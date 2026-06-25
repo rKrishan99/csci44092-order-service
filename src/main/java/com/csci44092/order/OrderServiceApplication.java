@@ -5,11 +5,18 @@ import com.csci44092.order.messaging.OrderEventProducer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
 
-@SpringBootApplication
+// NOTE for Member 3 (CS-2020-029): Remove the 'exclude' list below once you
+// configure PostgreSQL in application.properties and add the Order JPA entity.
+@SpringBootApplication(exclude = {
+        DataSourceAutoConfiguration.class,
+        HibernateJpaAutoConfiguration.class
+})
 public class OrderServiceApplication {
 
 	public static void main(String[] args) {

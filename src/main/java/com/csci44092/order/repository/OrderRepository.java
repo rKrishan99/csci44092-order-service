@@ -1,6 +1,6 @@
-package com.example.orderservice.repository;
+package com.csci44092.order.repository;
 
-import com.example.orderservice.entity.Order;
+import com.csci44092.order.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

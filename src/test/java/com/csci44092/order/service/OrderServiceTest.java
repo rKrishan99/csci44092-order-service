@@ -1,9 +1,10 @@
-package com.example.orderservice.service;
+package com.csci44092.order.service;
 
-import com.example.orderservice.dto.CreateOrderRequest;
-import com.example.orderservice.dto.ProductResponse;
-import com.example.orderservice.entity.Order;
-import com.example.orderservice.repository.OrderRepository;
+import com.csci44092.order.dto.CreateOrderRequest;
+import com.csci44092.order.dto.ProductResponse;
+import com.csci44092.order.entity.Order;
+import com.csci44092.order.repository.OrderRepository;
+import com.csci44092.order.messaging.OrderEventProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -20,15 +21,15 @@ class OrderServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
+    @Mock
+    private OrderEventProducer orderEventProducer;
+
     @InjectMocks
     private OrderService orderService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        // Set the product service URL manually since @Value won't inject in unit tests
-        orderService = new OrderService();
-        // Use reflection or a setter if needed — see note below
     }
 
     @Test
@@ -50,6 +51,7 @@ class OrderServiceTest {
         when(restTemplate.getForObject(anyString(), eq(ProductResponse.class)))
                 .thenReturn(mockProduct);
         when(orderRepository.save(any(Order.class))).thenReturn(savedOrder);
+        doNothing().when(orderEventProducer).publishOrderEvent(any());
 
         // Act
         Order result = orderService.createOrder(request);
@@ -59,6 +61,7 @@ class OrderServiceTest {
         assertEquals(3000.0, result.getTotalPrice());
         assertEquals("Laptop", result.getProductName());
         verify(orderRepository, times(1)).save(any(Order.class));
+        verify(orderEventProducer, times(1)).publishOrderEvent(any());
     }
 
     @Test

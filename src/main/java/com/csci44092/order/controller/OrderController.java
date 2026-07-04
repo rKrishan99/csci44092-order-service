@@ -1,8 +1,8 @@
-package com.example.orderservice.controller;
+package com.csci44092.order.controller;
 
-import com.example.orderservice.dto.CreateOrderRequest;
-import com.example.orderservice.entity.Order;
-import com.example.orderservice.service.OrderService;
+import com.csci44092.order.dto.CreateOrderRequest;
+import com.csci44092.order.entity.Order;
+import com.csci44092.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

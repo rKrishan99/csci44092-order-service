@@ -1,4 +1,4 @@
-package com.example.orderservice.dto;
+package com.csci44092.order.dto;
 
 public class ProductResponse {
 

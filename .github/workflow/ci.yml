@@ -25,4 +25,4 @@ jobs:
           -Dsonar.organization=rkrishan99
           -Dsonar.host.url=https://sonarcloud.io
         env:
-          SONAR_TOKEN: ${{ secrets.sqp_5dbf416b323acbc90f5fc5ea710ff4b44b0bd779 }}
+          SONAR_TOKEN: ${{ secrets.bec06dec014bf500770e61312635f15e1dc2e1f0 }}

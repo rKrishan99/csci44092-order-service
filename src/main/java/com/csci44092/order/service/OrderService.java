@@ -3,9 +3,9 @@ package com.csci44092.order.service;
 import com.csci44092.order.dto.CreateOrderRequest;
 import com.csci44092.order.dto.ProductResponse;
 import com.csci44092.order.entity.Order;
-import com.csci44092.order.repository.OrderRepository;
 import com.csci44092.order.messaging.OrderEvent;
 import com.csci44092.order.messaging.OrderEventProducer;
+import com.csci44092.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,6 @@ public class OrderService {
     @Autowired
     private OrderEventProducer orderEventProducer;
 
-    // This URL will come from application.properties or environment variable
     @Value("${product.service.url:http://localhost:8081}")
     private String productServiceUrl;
 
@@ -53,14 +52,13 @@ public class OrderService {
 
         Order savedOrder = orderRepository.save(order);
 
-        // Step 4: Publish order event to RabbitMQ
-        try {
-            OrderEvent event = new OrderEvent(savedOrder.getOrderId(), savedOrder.getCustomerId(), savedOrder.getOrderDate());
-            orderEventProducer.publishOrderEvent(event);
-        } catch (Exception e) {
-            // Log exception but don't fail order creation (or do, depending on requirement. Status report says order is saved and event published)
-            System.err.println("Failed to publish order event: " + e.getMessage());
-        }
+        // Step 4: Publish OrderEvent to RabbitMQ
+        OrderEvent event = new OrderEvent(
+                savedOrder.getOrderId(),
+                savedOrder.getCustomerId(),
+                LocalDateTime.now()
+        );
+        orderEventProducer.publishOrderEvent(event);
 
         return savedOrder;
     }

@@ -8,7 +8,6 @@ public class CreateOrderRequest {
 
     public CreateOrderRequest() {}
 
-    // Getters and Setters
     public String getCustomerId() { return customerId; }
     public void setCustomerId(String customerId) { this.customerId = customerId; }
 

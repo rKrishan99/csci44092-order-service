@@ -18,7 +18,6 @@ public class Order {
     private Double totalPrice;
     private LocalDateTime orderDate;
 
-    // Constructors
     public Order() {}
 
     public Order(String customerId, Long productId, String productName,
@@ -31,7 +30,6 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    // Getters and Setters
     public Long getOrderId() { return orderId; }
     public void setOrderId(Long orderId) { this.orderId = orderId; }
 
